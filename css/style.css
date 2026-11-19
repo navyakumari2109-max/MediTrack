@@ -1,0 +1,543 @@
+/**
+ * MediTrack - Modern Healthcare UI Stylesheet
+ * Single User Medicine Reminder System
+ * Academic B.Tech Project
+ */
+
+:root {
+    --primary: #1e40af;
+    --primary-light: #3b82f6;
+    --primary-subtle: #eff6ff;
+    --secondary: #0d9488;
+    --secondary-subtle: #f0fdfa;
+    --success: #10b981;
+    --success-subtle: #ecfdf5;
+    --warning: #f59e0b;
+    --warning-subtle: #fffbeb;
+    --danger: #ef4444;
+    --danger-subtle: #fef2f2;
+    --dark: #0f172a;
+    --slate: #475569;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --card-bg: #ffffff;
+    --body-bg: #f8fafc;
+    --sidebar-width: 270px;
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 25px -3px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--body-bg);
+    color: var(--dark);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* =============================================
+   App Shell Layout (Sidebar + Main Content)
+============================================= */
+.app-wrapper {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.app-sidebar {
+    width: var(--sidebar-width);
+    background: #ffffff;
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+
+.sidebar-brand {
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+}
+
+.brand-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 10px rgba(30, 64, 175, 0.25);
+}
+
+.brand-text h1 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.brand-text p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 0;
+    font-weight: 500;
+}
+
+.sidebar-menu {
+    padding: 1.25rem 0.75rem;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.nav-section-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: var(--muted);
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.25rem;
+}
+
+.nav-link-custom {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.75rem 1rem;
+    color: var(--slate);
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.925rem;
+    transition: var(--transition);
+    margin-bottom: 0.25rem;
+    position: relative;
+}
+
+.nav-link-custom i {
+    font-size: 1.15rem;
+    width: 22px;
+    text-align: center;
+    color: var(--muted);
+    transition: var(--transition);
+}
+
+.nav-link-custom:hover {
+    background-color: var(--primary-subtle);
+    color: var(--primary);
+}
+
+.nav-link-custom:hover i {
+    color: var(--primary);
+}
+
+.nav-link-custom.active {
+    background-color: var(--primary-subtle);
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.nav-link-custom.active i {
+    color: var(--primary);
+}
+
+.nav-link-custom.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 4px;
+    background-color: var(--primary);
+    border-radius: 0 4px 4px 0;
+}
+
+.sidebar-footer {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--border);
+    background: #fafafa;
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.45);
+    z-index: 1030;
+    backdrop-filter: blur(3px);
+}
+
+/* Main Container */
+.app-main {
+    margin-left: var(--sidebar-width);
+    flex-grow: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - var(--sidebar-width));
+}
+
+.app-topbar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 1.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.content-container {
+    padding: 2rem 1.75rem;
+    flex-grow: 1;
+}
+
+/* =============================================
+   Card Styles & UI Components
+============================================= */
+.card-custom {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.card-custom:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.stat-card {
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.stat-number {
+    font-size: 1.85rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-top: 0.25rem;
+    color: var(--dark);
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Status Badges */
+.badge-status {
+    padding: 0.35rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.785rem;
+    border-radius: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.badge-status.status-taken {
+    background-color: var(--success-subtle);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.badge-status.status-missed {
+    background-color: var(--danger-subtle);
+    color: var(--danger);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.badge-status.status-pending {
+    background-color: var(--warning-subtle);
+    color: #b45309;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.badge-type {
+    background: #f1f5f9;
+    color: var(--slate);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 8px;
+}
+
+/* Timeline & Schedule Items */
+.dose-item-card {
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    padding: 1.15rem 1.25rem;
+    margin-bottom: 0.85rem;
+    transition: var(--transition);
+}
+
+.dose-item-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: var(--shadow-sm);
+}
+
+.dose-item-card.is-taken {
+    border-left: 4px solid var(--success);
+    background: #fcfdfc;
+}
+
+.dose-item-card.is-missed {
+    border-left: 4px solid var(--danger);
+    background: #fdfcfc;
+}
+
+.dose-item-card.is-pending {
+    border-left: 4px solid var(--warning);
+}
+
+/* Low Stock Banner */
+.banner-low-stock {
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+    border: 1px solid #fed7aa;
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+}
+
+/* Medicine Card (My Medicines page) */
+.medicine-grid-card {
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition);
+}
+
+.medicine-grid-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: #cbd5e1;
+}
+
+.type-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+/* Time Badge Pills */
+.time-pill {
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--slate);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* Form Styles */
+.form-label-custom {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--dark);
+    margin-bottom: 0.4rem;
+}
+
+.form-control-custom, .form-select-custom {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 0.65rem 0.95rem;
+    font-size: 0.925rem;
+    transition: var(--transition);
+}
+
+.form-control-custom:focus, .form-select-custom:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
+    outline: none;
+}
+
+/* Empty State */
+.empty-state-box {
+    text-align: center;
+    padding: 3.5rem 1.5rem;
+}
+
+.empty-state-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--primary-subtle);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.25rem;
+    margin: 0 auto 1.25rem;
+}
+
+/* Disclaimer Footer */
+.app-footer {
+    border-top: 1px solid var(--border);
+    background: #ffffff;
+    padding: 1.25rem 1.75rem;
+    font-size: 0.825rem;
+    color: var(--muted);
+}
+
+/* Mobile Responsive & PWA Install Styles */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: #ffffff;
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+    z-index: 1030;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.4rem;
+    width: 20%;
+    position: relative;
+    transition: var(--transition);
+}
+
+.bottom-nav-item i {
+    font-size: 1.25rem;
+    margin-bottom: 2px;
+}
+
+.bottom-nav-item.active {
+    color: var(--primary);
+}
+
+.bottom-nav-item.active i {
+    color: var(--primary);
+}
+
+.btn-install-pwa {
+    background: linear-gradient(135deg, #10b981 0%, #0d9488 100%);
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    transition: var(--transition);
+}
+
+.btn-install-pwa:hover {
+    background: linear-gradient(135deg, #059669 0%, #0f766e 100%);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 991.98px) {
+    .app-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .app-sidebar.active {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    .app-main {
+        margin-left: 0;
+        width: 100%;
+        padding-bottom: 72px; /* Leave room for mobile bottom nav */
+    }
+
+    .content-container {
+        padding: 1.25rem 1rem;
+    }
+
+    .app-topbar {
+        padding: 0.75rem 1rem;
+    }
+
+    .mobile-bottom-nav {
+        display: flex;
+    }
+}
+
+/* Standalone PWA Display Adjustments */
+@media all and (display-mode: standalone) {
+    body {
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+
+    .btn-install-pwa {
+        display: none !important;
+    }
+}
+

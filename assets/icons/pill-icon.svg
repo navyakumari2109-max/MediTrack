@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d9488;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="24" fill="url(#grad1)" />
+  <!-- Capsule pill tilted 45 deg -->
+  <g transform="translate(50, 50) rotate(45) translate(-50, -50)">
+    <!-- Top Half -->
+    <path d="M 35 50 L 35 30 A 15 15 0 0 1 65 30 L 65 50 Z" fill="#ffffff" />
+    <!-- Bottom Half -->
+    <path d="M 35 50 L 35 70 A 15 15 0 0 0 65 70 L 65 50 Z" fill="#38bdf8" />
+    <!-- Center divider line -->
+    <line x1="33" y1="50" x2="67" y2="50" stroke="#1e293b" stroke-width="2" stroke-linecap="round" />
+  </g>
+  <!-- Medical Plus badge -->
+  <circle cx="75" cy="25" r="14" fill="#10b981" />
+  <rect x="72" y="17" width="6" height="16" rx="2" fill="#ffffff" />
+  <rect x="67" y="22" width="16" height="6" rx="2" fill="#ffffff" />
+</svg>

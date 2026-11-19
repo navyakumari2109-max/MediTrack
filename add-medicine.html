@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Medicine – MediTrack</title>
+    <!-- PWA & Mobile Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e40af">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MediTrack">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-wrapper">
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Navigation Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+        <a href="index.html" class="sidebar-brand">
+            <div class="brand-icon">
+                <i class="fas fa-heart-pulse"></i>
+            </div>
+            <div class="brand-text">
+                <h1>MediTrack</h1>
+                <p>Smart Medicine Reminder</p>
+            </div>
+        </a>
+
+        <div class="sidebar-menu">
+            <div class="nav-section-title">Navigation</div>
+            <a href="index.html" class="nav-link-custom">
+                <i class="fas fa-chart-pie"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="add-medicine.html" class="nav-link-custom active">
+                <i class="fas fa-plus-circle"></i>
+                <span>Add Medicine</span>
+            </a>
+            <a href="medicines.html" class="nav-link-custom">
+                <i class="fas fa-pills"></i>
+                <span>My Medicines</span>
+                <span class="badge bg-warning text-dark ms-auto rounded-pill" id="nav-stock-badge" style="display: none;">0</span>
+            </a>
+            <a href="reminders.html" class="nav-link-custom">
+                <i class="far fa-bell"></i>
+                <span>Reminders</span>
+                <span class="badge bg-primary ms-auto rounded-pill" id="nav-pending-badge" style="display: none;">0</span>
+            </a>
+            <a href="history.html" class="nav-link-custom">
+                <i class="fas fa-clock-rotate-left"></i>
+                <span>Medicine History</span>
+            </a>
+            <a href="settings.html" class="nav-link-custom">
+                <i class="fas fa-gear"></i>
+                <span>Settings</span>
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="d-flex align-items-center gap-2">
+                <div class="stat-icon-wrapper bg-primary-subtle text-primary rounded-circle" style="width: 34px; height: 34px; font-size: 0.9rem;">
+                    <i class="fas fa-heart-pulse"></i>
+                </div>
+                <div>
+                    <div class="fw-bold small text-dark">MediTrack</div>
+                    <div class="text-muted" style="font-size: 0.725rem;">Medicine Reminder</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+        <!-- Topbar -->
+        <header class="app-topbar d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-outline-secondary d-lg-none" id="sidebar-toggle" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div>
+                    <h5 class="fw-bold mb-0 text-dark" id="page-form-title">Add New Medicine</h5>
+                    <span class="text-muted small" id="page-form-desc">Schedule your medicine times and inventory</span>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-sm btn-install-pwa rounded-pill px-3" onclick="App.installPwa()" style="display: none;">
+                    <i class="fas fa-download me-1"></i> <span class="d-none d-sm-inline">Install App</span>
+                </button>
+                <a href="medicines.html" class="btn btn-outline-secondary rounded-pill px-3">
+                    <i class="fas fa-arrow-left me-1"></i> Back to Medicines
+                </a>
+            </div>
+        </header>
+
+        <!-- Content Body -->
+        <div class="content-container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-9">
+                    <div class="card-custom p-4 p-md-5">
+                        <form id="medicine-form">
+                            <!-- Section 1: Basic Information -->
+                            <div class="mb-4">
+                                <h6 class="fw-bold text-primary mb-3 d-flex align-items-center gap-2">
+                                    <i class="fas fa-circle-info"></i> Basic Medicine Information
+                                </h6>
+
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <label for="medicine_name" class="form-label-custom">Medicine Name <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fas fa-prescription-bottle text-muted"></i></span>
+                                            <input type="text" class="form-control form-control-custom" id="medicine_name" placeholder="e.g. Paracetamol, Metformin" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3">
+                                        <label for="dosage" class="form-label-custom">Dosage Amount <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fas fa-weight-scale text-muted"></i></span>
+                                            <input type="text" class="form-control form-control-custom" id="dosage" placeholder="e.g. 1 Tablet, 5 ml" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3">
+                                        <label for="medicine_type" class="form-label-custom">Medicine Type</label>
+                                        <select class="form-select form-select-custom" id="medicine_type">
+                                            <option value="Tablet" selected>Tablet</option>
+                                            <option value="Capsule">Capsule</option>
+                                            <option value="Syrup">Syrup</option>
+                                            <option value="Injection">Injection</option>
+                                            <option value="Drops">Drops</option>
+                                            <option value="Inhaler">Inhaler</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4 text-muted opacity-25">
+
+                            <!-- Section 2: Schedule & Reminders -->
+                            <div class="mb-4">
+                                <h6 class="fw-bold text-primary mb-3 d-flex align-items-center gap-2">
+                                    <i class="far fa-calendar-alt"></i> Dosage Schedule & Reminder Times
+                                </h6>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-12 col-md-4">
+                                        <label for="start_date" class="form-label-custom">Start Date <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control form-control-custom" id="start_date" required>
+                                    </div>
+
+                                    <div class="col-12 col-md-4">
+                                        <label for="end_date" class="form-label-custom">End Date <span class="text-muted fw-normal">(Optional)</span></label>
+                                        <input type="date" class="form-control form-control-custom" id="end_date">
+                                        <small class="text-muted" style="font-size: 0.75rem;">Leave empty for continuous regular medicine</small>
+                                    </div>
+
+                                    <div class="col-12 col-md-4">
+                                        <label for="frequency" class="form-label-custom">Frequency</label>
+                                        <select class="form-select form-select-custom" id="frequency">
+                                            <option value="Once daily" selected>Once daily</option>
+                                            <option value="Twice daily">Twice daily</option>
+                                            <option value="Three times daily">Three times daily</option>
+                                            <option value="Custom">Custom</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Dynamic Reminder Times List -->
+                                <div class="bg-light p-3 p-md-4 rounded-3 border mb-3">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <div>
+                                            <label class="form-label-custom mb-0">Scheduled Reminder Times <span class="text-danger">*</span></label>
+                                            <div class="text-muted small">You will receive notifications at each specified time</div>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3" id="btn-add-time">
+                                            <i class="fas fa-plus me-1"></i> Add Time
+                                        </button>
+                                    </div>
+
+                                    <div id="reminder-times-container" class="mt-3">
+                                        <!-- Dynamic inputs injected by JS -->
+                                    </div>
+                                </div>
+
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <label for="instructions" class="form-label-custom">Intake Instruction</label>
+                                        <select class="form-select form-select-custom" id="instructions">
+                                            <option value="After food" selected>After food</option>
+                                            <option value="Before food">Before food</option>
+                                            <option value="With food">With food</option>
+                                            <option value="Empty stomach">Empty stomach</option>
+                                            <option value="Bedtime">Bedtime</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label for="notes" class="form-label-custom">Optional Notes & Doctor Advice</label>
+                                        <input type="text" class="form-control form-control-custom" id="notes" placeholder="e.g. Drink full glass of water, avoid citrus">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4 text-muted opacity-25">
+
+                            <!-- Section 3: Inventory & Expiry Tracking -->
+                            <div class="mb-4">
+                                <h6 class="fw-bold text-primary mb-3 d-flex align-items-center gap-2">
+                                    <i class="fas fa-boxes-stacked"></i> Stock & Expiry Tracking
+                                </h6>
+
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <label for="remaining_quantity" class="form-label-custom">Remaining Quantity / Units <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light"><i class="fas fa-layer-group text-muted"></i></span>
+                                            <input type="number" class="form-control form-control-custom" id="remaining_quantity" placeholder="e.g. 30" min="0" required>
+                                        </div>
+                                        <small class="text-muted" style="font-size: 0.75rem;">Decreases automatically each time a dose is marked as Taken</small>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label for="expiry_date" class="form-label-custom">Medicine Expiry Date <span class="text-muted fw-normal">(Optional)</span></label>
+                                        <input type="date" class="form-control form-control-custom" id="expiry_date">
+                                        <small class="text-muted" style="font-size: 0.75rem;">Get early warnings before medicine expires</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="d-flex align-items-center justify-content-end gap-3 pt-3 border-top">
+                                <a href="medicines.html" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+                                <button type="submit" class="btn btn-primary rounded-pill px-5 shadow-sm fw-semibold" id="btn-submit-form">
+                                    <i class="fas fa-check me-2"></i> Save Medicine
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer text-center">
+            <div class="container-fluid">
+                <p class="mb-0 text-muted" style="font-size: 0.775rem;">
+                    MediTrack &bull; Single-User Medicine Reminder System
+                </p>
+            </div>
+        </footer>
+
+        <!-- Mobile Bottom Navigation Bar -->
+        <nav class="mobile-bottom-nav">
+            <a href="index.html" class="bottom-nav-item">
+                <i class="fas fa-chart-pie"></i>
+                <span>Home</span>
+            </a>
+            <a href="medicines.html" class="bottom-nav-item">
+                <i class="fas fa-pills"></i>
+                <span>Meds</span>
+            </a>
+            <a href="add-medicine.html" class="bottom-nav-item active">
+                <i class="fas fa-plus-circle text-primary" style="font-size: 1.5rem;"></i>
+                <span>Add</span>
+            </a>
+            <a href="reminders.html" class="bottom-nav-item position-relative">
+                <i class="far fa-bell"></i>
+                <span class="badge bg-primary position-absolute top-0 end-0 rounded-pill" id="bottom-pending-badge" style="display: none; font-size: 0.6rem;">0</span>
+                <span>Alerts</span>
+            </a>
+            <a href="history.html" class="bottom-nav-item">
+                <i class="fas fa-clock-rotate-left"></i>
+                <span>History</span>
+            </a>
+            <a href="settings.html" class="bottom-nav-item">
+                <i class="fas fa-gear"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </main>
+</div>
+
+<!-- Bootstrap 5 Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Project JS Modules -->
+<script src="js/storage.js"></script>
+<script src="js/app.js"></script>
+<script src="js/medicines.js"></script>
+</body>
+</html>
